@@ -1,10 +1,14 @@
 import streamlit as st
+from google.oauth2 import service_account
 import vertexai
 from vertexai.generative_models import GenerativeModel
 import vertexai.generative_models as generative_models
 
-# Initialize Vertex AI
-vertexai.init(project="mitch-1-0", location="us-central1")
+# Load the service account credentials from Streamlit Secrets
+credentials = service_account.Credentials.from_service_account_info(st.secrets["gcp_service_account"])
+
+# Initialize Vertex AI SDK with the provided credentials
+vertexai.init(project="mitch-1-0", location="us-central1", credentials=credentials)
 
 # Configuration for generating content
 generation_config = {
